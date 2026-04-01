@@ -11,10 +11,5 @@ public class CursoConfiguration : IEntityTypeConfiguration<Curso>
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Nome).IsRequired().HasMaxLength(50);
         builder.Property(c => c.Descricao).HasMaxLength(150);
-
-        builder.HasMany(c => c.Turmas)
-               .WithOne(t => t.Curso)
-               .HasForeignKey(t => t.CursoId)
-               .OnDelete(DeleteBehavior.NoAction);
     }
 }

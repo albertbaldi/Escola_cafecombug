@@ -4,9 +4,9 @@ namespace Escola.Domain.Interfaces;
 
 public interface ITurmaRepository
 {
-    Task<Turma> GetByIdAsync(Guid id);
+    Task<Turma> GetByIdAsync(int id);
     Task<List<Turma>> GetAllAsync();
     Task<Turma> AddAsync(Turma turma);
     Task<Turma> UpdateAsync(Turma turma);
-    Task<Turma> DeleteAsync(Guid id);
+    Task<Turma> DeleteAsync(int id);
 }

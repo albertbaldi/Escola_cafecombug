@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: escola-db
+    environment:
+      POSTGRES_DB: escoladb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Escola@123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d escoladb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    container_name: escola-api
+    build:
+      context: .
+      dockerfile: Escola.API/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: User ID=postgres;Password=Escola@123;Host=db;Port=5432;Database=escoladb;Pooling=true;Connection Lifetime=0;
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:

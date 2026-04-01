@@ -10,7 +10,7 @@ public class TurmaRepository : ITurmaRepository
         throw new NotImplementedException();
     }
 
-    public Task<Turma> DeleteAsync(Guid id)
+    public Task<Turma> DeleteAsync(int id)
     {
         throw new NotImplementedException();
     }
@@ -20,7 +20,7 @@ public class TurmaRepository : ITurmaRepository
         throw new NotImplementedException();
     }
 
-    public Task<Turma> GetByIdAsync(Guid id)
+    public Task<Turma> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
