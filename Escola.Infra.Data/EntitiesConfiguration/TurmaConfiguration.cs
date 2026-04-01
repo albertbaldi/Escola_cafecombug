@@ -17,9 +17,5 @@ public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
                .WithMany(c => c.Turmas)
                .HasForeignKey(t => t.CursoId)
                .OnDelete(DeleteBehavior.NoAction);
-        builder.HasMany(t => t.Matriculas)
-               .WithOne(m => m.Turma)
-               .HasForeignKey(m => m.TurmaId)
-               .OnDelete(DeleteBehavior.NoAction);
     }
 }
