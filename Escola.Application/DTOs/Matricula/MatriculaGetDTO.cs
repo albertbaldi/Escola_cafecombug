@@ -1,16 +1,13 @@
-﻿namespace Escola.Domain.Entities;
+using System;
 
-public class Matricula
+namespace Escola.Application.DTOs.Matricula;
+
+public class MatriculaGetDTO
 {
     public int Id { get; set; }
     public int UsuarioId { get; set; }
     public int TurmaId { get; set; }
     public DateTime DataMatricula { get; set; }
     public DateTime DataExpiracao { get; set; }
-    public bool Excluido { get; set; }
     public bool Ativa { get; set; }
-
-    public ICollection<Nota> Notas { get; set; }
-    public Usuario Usuario { get; set; }
-    public Turma Turma { get; set; }
 }
