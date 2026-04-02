@@ -1,4 +1,3 @@
-using System;
 using Escola.Application.DTOs.Usuario;
 
 namespace Escola.Application.Interfaces;
@@ -10,4 +9,6 @@ public interface IUsuarioService
     Task<UsuarioGetDTO> AddAsync(UsuarioPostDTO usuarioPostDTO);
     Task<UsuarioGetDTO> UpdateAsync(int id, UsuarioPutDTO usuarioPutDTO);
     Task<UsuarioGetDTO> DeleteAsync(int id);
+    Task<bool> ExisteUsuarioAsync();
+
 }
