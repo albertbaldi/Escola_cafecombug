@@ -1,8 +1,8 @@
-using System;
-using System.Security.Cryptography;
 using Escola.Application.DTOs.Usuario;
 using Escola.Application.Interfaces;
+using Escola.Domain.Entities;
 using Escola.Domain.Interfaces;
+using System.Security.Cryptography;
 
 namespace Escola.Application.Services;
 
@@ -21,14 +21,15 @@ public class UsuarioService : IUsuarioService
         byte[] passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(usuarioPostDTO.Senha));
         byte[] passwordSalt = hmac.Key;
 
-        var usuario = new Domain.Entities.Usuario
+        var existeUsuario = await ExisteUsuarioAsync();
+        var usuario = new Usuario
         {
             Nome = usuarioPostDTO.Nome,
             Email = usuarioPostDTO.Email,
             Excluido = false,
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
-            Perfil = "Aluno"
+            Perfil = existeUsuario ? "Aluno" : "Administrador"
         };
 
         var createdUsuario = await _usuarioRepository.AddAsync(usuario);
@@ -54,6 +55,11 @@ public class UsuarioService : IUsuarioService
             Nome = deletedUsuario.Nome,
             Email = deletedUsuario.Email
         };
+    }
+
+    public async Task<bool> ExisteUsuarioAsync()
+    {
+        return await _usuarioRepository.ExisteUsuarioAsync();
     }
 
     public async Task<List<UsuarioGetDTO>> GetAllAsync()
