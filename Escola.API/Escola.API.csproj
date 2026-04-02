@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Escola.Infra.Ioc\Escola.Infra.Ioc.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 using System;
 using Escola.Application.DTOs.Curso;
+using Escola.Application.Exceptions;
 using Escola.Application.Interfaces;
 using Escola.Domain.Entities;
 using Escola.Domain.Interfaces;
@@ -38,7 +39,7 @@ public class CursoService : ICursoService
         var curso = await _cursoRepository.GetByIdAsync(id);
 
         if (curso == null)
-            return null;
+            throw new NotFoundException("Curso não encontrado.");
 
         curso.Excluido = true;
         await _cursoRepository.UpdateAsync(curso);
@@ -68,7 +69,7 @@ public class CursoService : ICursoService
         var curso = await _cursoRepository.GetByIdAsync(id);
 
         if (curso == null)
-            return null;
+            throw new NotFoundException("Curso não encontrado.");
 
         return new CursoGetDTO
         {
@@ -80,17 +81,14 @@ public class CursoService : ICursoService
 
     public async Task<CursoGetDTO> UpdateAsync(CursoPutDTO cursoPutDTO)
     {
-        var curso = new Curso
-        {
-            Id = cursoPutDTO.Id,
-            Nome = cursoPutDTO.Nome,
-            Descricao = cursoPutDTO.Descricao
-        };
+        var curso = await _cursoRepository.GetByIdAsync(cursoPutDTO.Id);
+        if (curso == null)
+            throw new NotFoundException("Curso não encontrado.");
+
+        curso.Nome = cursoPutDTO.Nome;
+        curso.Descricao = cursoPutDTO.Descricao;
 
         var updatedCurso = await _cursoRepository.UpdateAsync(curso);
-
-        if (updatedCurso == null)
-            return null;
 
         return new CursoGetDTO
         {

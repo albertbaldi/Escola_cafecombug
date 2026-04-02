@@ -19,11 +19,7 @@ namespace Escola.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateCurso(CursoPostDTO cursoPostDTO)
         {
-            var createdCurso = await _cursoService.AddAsync(cursoPostDTO);
-            if (createdCurso == null)
-            {
-                return BadRequest("Não foi possível criar o curso.");
-            }
+            await _cursoService.AddAsync(cursoPostDTO);
 
             return Ok(new { Message = "Curso criado com sucesso!" });
         }
@@ -31,11 +27,7 @@ namespace Escola.API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateCurso(CursoPutDTO cursoPutDTO)
         {
-            var updatedCurso = await _cursoService.UpdateAsync(cursoPutDTO);
-            if (updatedCurso == null)
-            {
-                return BadRequest("Ocorreu um erro ao atualizar o curso.");
-            }
+            await _cursoService.UpdateAsync(cursoPutDTO);
 
             return Ok(new { Message = "Curso atualizado com sucesso!" });
         }
@@ -43,11 +35,7 @@ namespace Escola.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCurso(int id)
         {
-            var deletedCurso = await _cursoService.DeleteAsync(id);
-            if (deletedCurso == null)
-            {
-                return BadRequest("Ocorreu um erro ao deletar o curso.");
-            }
+            await _cursoService.DeleteAsync(id);
 
             return Ok(new { Message = "Curso deletado com sucesso!" });
         }
@@ -56,10 +44,6 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetCursoById(int id)
         {
             var curso = await _cursoService.GetByIdAsync(id);
-            if (curso == null)
-            {
-                return NotFound("Curso não encontrado.");
-            }
 
             return Ok(curso);
         }
@@ -68,6 +52,7 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetAllCursos()
         {
             var cursos = await _cursoService.GetAllAsync();
+
             return Ok(cursos);
         }
     }

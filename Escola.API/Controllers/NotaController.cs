@@ -19,11 +19,7 @@ namespace Escola.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateNota(NotaPostDTO notaPostDTO)
         {
-            var createdNota = await _notaService.AddAsync(notaPostDTO);
-            if (createdNota == null)
-            {
-                return BadRequest("Não foi possível criar a nota.");
-            }
+            await _notaService.AddAsync(notaPostDTO);
 
             return Ok(new { Message = "Nota criada com sucesso!" });
         }
@@ -31,11 +27,7 @@ namespace Escola.API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateNota(NotaPutDTO notaPutDTO)
         {
-            var updatedNota = await _notaService.UpdateAsync(notaPutDTO);
-            if (updatedNota == null)
-            {
-                return BadRequest("Ocorreu um erro ao atualizar a nota.");
-            }
+            await _notaService.UpdateAsync(notaPutDTO);
 
             return Ok(new { Message = "Nota atualizada com sucesso!" });
         }
@@ -43,11 +35,7 @@ namespace Escola.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteNota(int id)
         {
-            var deletedNota = await _notaService.DeleteAsync(id);
-            if (deletedNota == null)
-            {
-                return BadRequest("Ocorreu um erro ao deletar a nota.");
-            }
+            await _notaService.DeleteAsync(id);
 
             return Ok(new { Message = "Nota deletada com sucesso!" });
         }
@@ -56,12 +44,16 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetNotaById(int id)
         {
             var nota = await _notaService.GetByIdAsync(id);
-            if (nota == null)
-            {
-                return NotFound("Nota não encontrada.");
-            }
 
             return Ok(nota);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAllNotas()
+        {
+            var notas = await _notaService.GetAllAsync();
+
+            return Ok(notas);
         }
     }
 }
