@@ -10,4 +10,15 @@
     <ProjectReference Include="..\Escola.Domain\Escola.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\Curso\" />
+    <Folder Include="DTOs\Matricula\" />
+    <Folder Include="DTOs\Nota\" />
+    <Folder Include="DTOs\Turma\" />
+    <Folder Include="DTOs\Usuario\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
