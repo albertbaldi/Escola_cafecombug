@@ -39,17 +39,20 @@ public class NotaService : INotaService
 
     public async Task<NotaGetDTO> DeleteAsync(int id)
     {
-        var deletedNota = await _notaRepository.GetByIdAsync(id);
-        if (deletedNota == null)
+        var nota = await _notaRepository.GetByIdAsync(id);
+        if (nota == null)
             return null;
+
+        nota.Excluido = true;
+        await _notaRepository.UpdateAsync(nota);
 
         return new NotaGetDTO
         {
-            Id = deletedNota.Id,
-            MatriculaId = deletedNota.MatriculaId,
-            ValorNota = deletedNota.ValorNota,
-            DataNota = deletedNota.DataNota,
-            Aprovado = deletedNota.Aprovado
+            Id = nota.Id,
+            MatriculaId = nota.MatriculaId,
+            ValorNota = nota.ValorNota,
+            DataNota = nota.DataNota,
+            Aprovado = nota.Aprovado
         };
     }
 

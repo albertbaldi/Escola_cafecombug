@@ -36,12 +36,12 @@ public class MatriculaRepository : IMatriculaRepository
 
     public async Task<List<Matricula>> GetAllAsync()
     {
-        return await _context.Matricula.Where(m => !m.Excluido).ToListAsync();
+        return await _context.Matricula.Include(m => m.Turma).ThenInclude(t => t.Curso).Where(m => !m.Excluido).ToListAsync();
     }
 
     public async Task<Matricula> GetByIdAsync(int id)
     {
-        return await _context.Matricula.Where(m => !m.Excluido && m.Id == id).FirstOrDefaultAsync();
+        return await _context.Matricula.Include(m => m.Turma).ThenInclude(t => t.Curso).Where(m => !m.Excluido && m.Id == id).FirstOrDefaultAsync();
     }
 
     public async Task<Matricula> UpdateAsync(Matricula matricula)

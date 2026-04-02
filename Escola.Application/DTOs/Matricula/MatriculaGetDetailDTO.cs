@@ -7,9 +7,9 @@ namespace Escola.Application.DTOs.Matricula;
 public class MatriculaGetDetailDTO
 {
     public int Id { get; set; }
-    public UsuarioGetDTO Usuario { get; set; }
-    public TurmaGetDTO Turma { get; set; }
     public DateTime DataMatricula { get; set; }
     public DateTime DataExpiracao { get; set; }
     public bool Ativa { get; set; }
+    public TurmaGetDTO Turma { get; set; }
+    public UsuarioGetDTO Usuario { get; set; }
 }

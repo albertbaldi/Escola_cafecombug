@@ -43,19 +43,22 @@ public class MatriculaService : IMatriculaService
 
     public async Task<MatriculaGetDTO> DeleteAsync(int id)
     {
-        var deletedMatricula = await _matriculaRepository.DeleteAsync(id);
+        var matricula = await _matriculaRepository.DeleteAsync(id);
 
-        if (deletedMatricula == null)
+        if (matricula == null)
             return null;
+
+        matricula.Excluido = true;
+        await _matriculaRepository.UpdateAsync(matricula);
 
         return new MatriculaGetDTO
         {
-            Id = deletedMatricula.Id,
-            UsuarioId = deletedMatricula.UsuarioId,
-            TurmaId = deletedMatricula.TurmaId,
-            DataExpiracao = deletedMatricula.DataExpiracao,
-            DataMatricula = deletedMatricula.DataMatricula,
-            Ativa = deletedMatricula.Ativa
+            Id = matricula.Id,
+            UsuarioId = matricula.UsuarioId,
+            TurmaId = matricula.TurmaId,
+            DataExpiracao = matricula.DataExpiracao,
+            DataMatricula = matricula.DataMatricula,
+            Ativa = matricula.Ativa
         };
     }
 
