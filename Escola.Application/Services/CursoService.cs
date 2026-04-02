@@ -35,16 +35,19 @@ public class CursoService : ICursoService
 
     public async Task<CursoGetDTO> DeleteAsync(int id)
     {
-        var deletedCurso = await _cursoRepository.DeleteAsync(id);
+        var curso = await _cursoRepository.GetByIdAsync(id);
 
-        if (deletedCurso == null)
+        if (curso == null)
             return null;
+
+        curso.Excluido = true;
+        await _cursoRepository.UpdateAsync(curso);
 
         return new CursoGetDTO
         {
-            Id = deletedCurso.Id,
-            Nome = deletedCurso.Nome,
-            Descricao = deletedCurso.Descricao
+            Id = curso.Id,
+            Nome = curso.Nome,
+            Descricao = curso.Descricao
         };
     }
 
