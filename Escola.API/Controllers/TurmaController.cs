@@ -18,11 +18,7 @@ namespace Escola.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateTurma(TurmaPostDTO turmaPostDTO)
         {
-            var createdTurma = await _turmaService.AddAsync(turmaPostDTO);
-            if (createdTurma == null)
-            {
-                return BadRequest("Não foi possível criar a turma.");
-            }
+            await _turmaService.AddAsync(turmaPostDTO);
 
             // return Ok(createdTurma);
             return Ok(new { Message = "Turma criada com sucesso!" });
@@ -31,11 +27,7 @@ namespace Escola.API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateTurma(TurmaPutDTO turmaPutDTO)
         {
-            var updatedTurma = await _turmaService.UpdateAsync(turmaPutDTO);
-            if (updatedTurma == null)
-            {
-                return BadRequest("Ocorreu um erro ao atualizar a turma.");
-            }
+            await _turmaService.UpdateAsync(turmaPutDTO);
 
             // return Ok(updatedTurma);
             return Ok(new { Message = "Turma atualizada com sucesso!" });
@@ -44,11 +36,7 @@ namespace Escola.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTurma(int id)
         {
-            var deletedTurma = await _turmaService.DeleteAsync(id);
-            if (deletedTurma == null)
-            {
-                return BadRequest("Ocorreu um erro ao deletar a turma.");
-            }
+            await _turmaService.DeleteAsync(id);
 
             return Ok(new { Message = "Turma deletada com sucesso!" });
         }
@@ -57,10 +45,6 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetTurmaById(int id)
         {
             var turma = await _turmaService.GetByIdAsync(id);
-            if (turma == null)
-            {
-                return NotFound("Turma não encontrada.");
-            }
 
             return Ok(turma);
         }
@@ -69,6 +53,7 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetAllTurmas()
         {
             var turmas = await _turmaService.GetAllAsync();
+
             return Ok(turmas);
         }
     }

@@ -19,11 +19,7 @@ namespace Escola.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateMatricula(MatriculaPostDTO matriculaPostDTO)
         {
-            var createdMatricula = await _matriculaService.AddAsync(matriculaPostDTO);
-            if (createdMatricula == null)
-            {
-                return BadRequest("Não foi possível criar a matrícula.");
-            }
+            await _matriculaService.AddAsync(matriculaPostDTO);
 
             // return Ok(createdMatricula);
             return Ok(new { Message = "Matrícula criada com sucesso!" });
@@ -32,11 +28,7 @@ namespace Escola.API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateMatricula(MatriculaPutDTO matriculaPutDTO)
         {
-            var updatedMatricula = await _matriculaService.UpdateAsync(matriculaPutDTO);
-            if (updatedMatricula == null)
-            {
-                return BadRequest("Ocorreu um erro ao atualizar a matrícula.");
-            }
+            await _matriculaService.UpdateAsync(matriculaPutDTO);
 
             // return Ok(updatedMatricula);
             return Ok(new { Message = "Matrícula atualizada com sucesso!" });
@@ -45,11 +37,7 @@ namespace Escola.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMatricula(int id)
         {
-            var deletedMatricula = await _matriculaService.DeleteAsync(id);
-            if (deletedMatricula == null)
-            {
-                return BadRequest("Ocorreu um erro ao deletar a matrícula.");
-            }
+            await _matriculaService.DeleteAsync(id);
 
             return Ok(new { Message = "Matrícula deletada com sucesso!" });
         }
@@ -58,10 +46,6 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetMatriculaById(int id)
         {
             var matricula = await _matriculaService.GetByIdAsync(id);
-            if (matricula == null)
-            {
-                return NotFound("Matrícula não encontrada.");
-            }
 
             return Ok(matricula);
         }
@@ -70,6 +54,7 @@ namespace Escola.API.Controllers
         public async Task<ActionResult> GetAllMatriculas()
         {
             var matriculas = await _matriculaService.GetAllAsync();
+
             return Ok(matriculas);
         }
     }
