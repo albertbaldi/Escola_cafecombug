@@ -39,6 +39,7 @@ public class UsuarioService : IUsuarioService
             Id = createdUsuario.Id,
             Nome = createdUsuario.Nome,
             Email = createdUsuario.Email,
+            Perfil = createdUsuario.Perfil
         };
     }
 
@@ -53,7 +54,8 @@ public class UsuarioService : IUsuarioService
         {
             Id = deletedUsuario.Id,
             Nome = deletedUsuario.Nome,
-            Email = deletedUsuario.Email
+            Email = deletedUsuario.Email,
+            Perfil = deletedUsuario.Perfil
         };
     }
 
@@ -70,7 +72,8 @@ public class UsuarioService : IUsuarioService
         {
             Id = u.Id,
             Nome = u.Nome,
-            Email = u.Email
+            Email = u.Email,
+            Perfil = u.Perfil
         }).ToList();
     }
 
@@ -85,7 +88,8 @@ public class UsuarioService : IUsuarioService
         {
             Id = usuario.Id,
             Nome = usuario.Nome,
-            Email = usuario.Email
+            Email = usuario.Email,
+            Perfil = usuario.Perfil
         };
     }
 
@@ -105,6 +109,7 @@ public class UsuarioService : IUsuarioService
             Id = updatedUsuario.Id,
             Nome = updatedUsuario.Nome,
             Email = updatedUsuario.Email,
+            Perfil = updatedUsuario.Perfil
         };
     }
 }
