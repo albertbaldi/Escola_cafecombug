@@ -69,6 +69,23 @@
             "method": "DELETE",
             "url": "{{baseUrl}}/usuarios/1"
           }
+        },
+        {
+          "name": "Login Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"joao.silva@exemplo.com\",\n  \"senha\": \"senhaForte123\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios/login"
+          }
         }
       ]
     },
@@ -266,6 +283,47 @@
           "name": "Obter Curso",
           "request": {
             "method": "GET",
+            "url": "{{baseUrl}}/cursos/1"
+          }
+        },
+        {
+          "name": "Criar Curso",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Ciência da Computação\",\n  \"descricao\": \"Curso de Bacharelado em Tecnologia\"\n}"
+            },
+            "url": "{{baseUrl}}/cursos"
+          }
+        },
+        {
+          "name": "Atualizar Curso",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"nome\": \"Ciência da Computação Editado\",\n  \"descricao\": \"Descrição editada\"\n}"
+            },
+            "url": "{{baseUrl}}/cursos/1"
+          }
+        },
+        {
+          "name": "Excluir Curso",
+          "request": {
+            "method": "DELETE",
             "url": "{{baseUrl}}/cursos/1"
           }
         }
