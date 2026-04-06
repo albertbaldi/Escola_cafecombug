@@ -1,37 +1,67 @@
 {
   "info": {
     "name": "Escola_cafecombug API",
-    "description": "Coleção Postman gerada com base nas Entidades e DTOs da Escola.API.",
+    "description": "Coleção Postman completa da Escola.API com suporte a autenticação Bearer Token e endpoints validados.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
   },
   "variable": [
     {
       "key": "baseUrl",
       "value": "https://localhost:5001/api",
       "type": "string"
+    },
+    {
+      "key": "bearerToken",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
     {
       "name": "Usuarios",
+      "description": "Gerenciamento de usuários e autenticação",
       "item": [
         {
-          "name": "Listar Usuarios",
+          "name": "Registrar Novo Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Usuário criado com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "const token = jsonData.token;",
+                  "",
+                  "pm.test('Token JWT presente na resposta', function () {",
+                  "    pm.expect(token).to.be.a('string').and.not.empty;",
+                  "});",
+                  "",
+                  "if (token) {",
+                  "    pm.collectionVariables.set('bearerToken', token);",
+                  "    console.log('Bearer Token salvo: ' + token.substring(0, 20) + '...');",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/usuarios"
-          }
-        },
-        {
-          "name": "Obter Usuario",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/usuarios/1"
-          }
-        },
-        {
-          "name": "Criar Usuario",
-          "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -47,32 +77,38 @@
           }
         },
         {
-          "name": "Atualizar Usuario",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"João Silva Editado\",\n  \"email\": \"joao.editado@exemplo.com\",\n  \"senha\": \"novaSenhaForte123\"\n}"
-            },
-            "url": "{{baseUrl}}/usuarios/1"
-          }
-        },
-        {
-          "name": "Excluir Usuario",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/usuarios/1"
-          }
-        },
-        {
           "name": "Login Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login retornou sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "const token = jsonData.token;",
+                  "",
+                  "pm.test('Token JWT presente na resposta', function () {",
+                  "    pm.expect(token).to.be.a('string').and.not.empty;",
+                  "});",
+                  "",
+                  "if (token) {",
+                  "    pm.collectionVariables.set('bearerToken', token);",
+                  "    console.log('Bearer Token salvo com sucesso');",
+                  "} else {",
+                  "    console.log('Resposta:', JSON.stringify(jsonData, null, 2));",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
             "header": [
               {
@@ -90,197 +126,55 @@
       ]
     },
     {
-      "name": "Turmas",
-      "item": [
-        {
-          "name": "Listar Turmas",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/turmas"
-          }
-        },
-        {
-          "name": "Obter Turma",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/turmas/1"
-          }
-        },
-        {
-          "name": "Criar Turma",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1\",\n  \"descricao\": \"Turma do primeiro semestre\"\n}"
-            },
-            "url": "{{baseUrl}}/turmas"
-          }
-        },
-        {
-          "name": "Atualizar Turma",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"id\": 1,\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1 Atualizada\",\n  \"descricao\": \"Descrição editada\"\n}"
-            },
-            "url": "{{baseUrl}}/turmas/1"
-          }
-        },
-        {
-          "name": "Excluir Turma",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/turmas/1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Notas",
-      "item": [
-        {
-          "name": "Listar Notas",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/notas"
-          }
-        },
-        {
-          "name": "Obter Nota",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/notas/1"
-          }
-        },
-        {
-          "name": "Criar Nota",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"matriculaId\": 1,\n  \"valorNota\": 85\n}"
-            },
-            "url": "{{baseUrl}}/notas"
-          }
-        },
-        {
-          "name": "Atualizar Nota",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"id\": 1,\n  \"matriculaId\": 1,\n  \"valorNota\": 95\n}"
-            },
-            "url": "{{baseUrl}}/notas/1"
-          }
-        },
-        {
-          "name": "Excluir Nota",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/notas/1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Matriculas",
-      "item": [
-        {
-          "name": "Listar Matriculas",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/matriculas"
-          }
-        },
-        {
-          "name": "Obter Matricula",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/matriculas/1"
-          }
-        },
-        {
-          "name": "Criar Matricula",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"usuarioId\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2024-12-31T23:59:59.000Z\"\n}"
-            },
-            "url": "{{baseUrl}}/matriculas"
-          }
-        },
-        {
-          "name": "Atualizar Matricula",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"id\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2025-12-31T23:59:59.000Z\"\n}"
-            },
-            "url": "{{baseUrl}}/matriculas/1"
-          }
-        },
-        {
-          "name": "Excluir Matricula",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/matriculas/1"
-          }
-        }
-      ]
-    },
-    {
       "name": "Cursos",
+      "description": "Gerenciamento de cursos",
       "item": [
         {
           "name": "Listar Cursos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta é um array', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/cursos"
           }
         },
         {
-          "name": "Obter Curso",
+          "name": "Obter Curso por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém id e nome', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('nome');",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/cursos/1"
@@ -288,6 +182,24 @@
         },
         {
           "name": "Criar Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Curso criado com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -305,6 +217,24 @@
         },
         {
           "name": "Atualizar Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Curso atualizado com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "PUT",
             "header": [
@@ -317,14 +247,486 @@
               "mode": "raw",
               "raw": "{\n  \"id\": 1,\n  \"nome\": \"Ciência da Computação Editado\",\n  \"descricao\": \"Descrição editada\"\n}"
             },
-            "url": "{{baseUrl}}/cursos/1"
+            "url": "{{baseUrl}}/cursos"
           }
         },
         {
           "name": "Excluir Curso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Curso deletado com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('deletado');",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/cursos/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Turmas",
+      "description": "Gerenciamento de turmas",
+      "item": [
+        {
+          "name": "Listar Turmas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta é um array', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/turmas"
+          }
+        },
+        {
+          "name": "Obter Turma por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém id e nome', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('nome');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/turmas/1"
+          }
+        },
+        {
+          "name": "Criar Turma",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Turma criada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1\",\n  \"descricao\": \"Turma do primeiro semestre\"\n}"
+            },
+            "url": "{{baseUrl}}/turmas"
+          }
+        },
+        {
+          "name": "Atualizar Turma",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Turma atualizada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1 Atualizada\",\n  \"descricao\": \"Descrição editada\"\n}"
+            },
+            "url": "{{baseUrl}}/turmas"
+          }
+        },
+        {
+          "name": "Excluir Turma",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Turma deletada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('deletada');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/turmas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Matriculas",
+      "description": "Gerenciamento de matrículas",
+      "item": [
+        {
+          "name": "Listar Matriculas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta é um array', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/matriculas"
+          }
+        },
+        {
+          "name": "Obter Matricula por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém id', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/matriculas/1"
+          }
+        },
+        {
+          "name": "Criar Matricula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Matrícula criada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2024-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/matriculas"
+          }
+        },
+        {
+          "name": "Atualizar Matricula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Matrícula atualizada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2025-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/matriculas"
+          }
+        },
+        {
+          "name": "Excluir Matricula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Matrícula deletada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('deletada');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/matriculas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notas",
+      "description": "Gerenciamento de notas",
+      "item": [
+        {
+          "name": "Listar Notas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta é um array', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notas"
+          }
+        },
+        {
+          "name": "Obter Nota por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém id', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notas/1"
+          }
+        },
+        {
+          "name": "Criar Nota",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Nota criada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"matriculaId\": 1,\n  \"valorNota\": 85\n}"
+            },
+            "url": "{{baseUrl}}/notas"
+          }
+        },
+        {
+          "name": "Atualizar Nota",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Nota atualizada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('sucesso');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"matriculaId\": 1,\n  \"valorNota\": 95\n}"
+            },
+            "url": "{{baseUrl}}/notas"
+          }
+        },
+        {
+          "name": "Excluir Nota",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Nota deletada com sucesso', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém mensagem de sucesso', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('deletada');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/notas/1"
           }
         }
       ]
