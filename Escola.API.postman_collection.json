@@ -1,0 +1,275 @@
+{
+  "info": {
+    "name": "Escola_cafecombug API",
+    "description": "Coleção Postman gerada com base nas Entidades e DTOs da Escola.API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:5001/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/usuarios"
+          }
+        },
+        {
+          "name": "Obter Usuario",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/usuarios/1"
+          }
+        },
+        {
+          "name": "Criar Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao.silva@exemplo.com\",\n  \"senha\": \"senhaForte123\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios"
+          }
+        },
+        {
+          "name": "Atualizar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva Editado\",\n  \"email\": \"joao.editado@exemplo.com\",\n  \"senha\": \"novaSenhaForte123\"\n}"
+            },
+            "url": "{{baseUrl}}/usuarios/1"
+          }
+        },
+        {
+          "name": "Excluir Usuario",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/usuarios/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Turmas",
+      "item": [
+        {
+          "name": "Listar Turmas",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/turmas"
+          }
+        },
+        {
+          "name": "Obter Turma",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/turmas/1"
+          }
+        },
+        {
+          "name": "Criar Turma",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1\",\n  \"descricao\": \"Turma do primeiro semestre\"\n}"
+            },
+            "url": "{{baseUrl}}/turmas"
+          }
+        },
+        {
+          "name": "Atualizar Turma",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1 Atualizada\",\n  \"descricao\": \"Descrição editada\"\n}"
+            },
+            "url": "{{baseUrl}}/turmas/1"
+          }
+        },
+        {
+          "name": "Excluir Turma",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/turmas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notas",
+      "item": [
+        {
+          "name": "Listar Notas",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notas"
+          }
+        },
+        {
+          "name": "Obter Nota",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/notas/1"
+          }
+        },
+        {
+          "name": "Criar Nota",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"matriculaId\": 1,\n  \"valorNota\": 85\n}"
+            },
+            "url": "{{baseUrl}}/notas"
+          }
+        },
+        {
+          "name": "Atualizar Nota",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"matriculaId\": 1,\n  \"valorNota\": 95\n}"
+            },
+            "url": "{{baseUrl}}/notas/1"
+          }
+        },
+        {
+          "name": "Excluir Nota",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/notas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Matriculas",
+      "item": [
+        {
+          "name": "Listar Matriculas",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/matriculas"
+          }
+        },
+        {
+          "name": "Obter Matricula",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/matriculas/1"
+          }
+        },
+        {
+          "name": "Criar Matricula",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2024-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/matriculas"
+          }
+        },
+        {
+          "name": "Atualizar Matricula",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2025-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/matriculas/1"
+          }
+        },
+        {
+          "name": "Excluir Matricula",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/matriculas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cursos",
+      "item": [
+        {
+          "name": "Listar Cursos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cursos"
+          }
+        },
+        {
+          "name": "Obter Curso",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cursos/1"
+          }
+        }
+      ]
+    }
+  ]
+}
