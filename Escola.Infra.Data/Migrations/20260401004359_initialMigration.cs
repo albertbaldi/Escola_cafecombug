@@ -97,6 +97,7 @@ namespace Escola.Infra.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MatriculaId = table.Column<int>(type: "integer", nullable: false),
                     ValorNota = table.Column<int>(type: "integer", nullable: false),
+                    DataNota = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Aprovado = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

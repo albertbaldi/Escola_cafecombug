@@ -94,6 +94,9 @@ namespace Escola.Infra.Data.Migrations
                     b.Property<int>("ValorNota")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("DataNota")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MatriculaId");
