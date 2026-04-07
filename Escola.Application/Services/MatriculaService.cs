@@ -1,4 +1,5 @@
 using System;
+using Escola.Application.DTOs.Curso;
 using Escola.Application.DTOs.Matricula;
 using Escola.Application.DTOs.Turma;
 using Escola.Application.DTOs.Usuario;

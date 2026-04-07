@@ -73,7 +73,7 @@
               "mode": "raw",
               "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao.silva@exemplo.com\",\n  \"senha\": \"senhaForte123\"\n}"
             },
-            "url": "{{baseUrl}}/usuarios"
+            "url": "{{baseUrl}}/usuario"
           }
         },
         {
@@ -120,7 +120,7 @@
               "mode": "raw",
               "raw": "{\n  \"email\": \"joao.silva@exemplo.com\",\n  \"senha\": \"senhaForte123\"\n}"
             },
-            "url": "{{baseUrl}}/usuarios/login"
+            "url": "{{baseUrl}}/usuario/login"
           }
         }
       ]
@@ -151,7 +151,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/cursos"
+            "url": "{{baseUrl}}/curso"
           }
         },
         {
@@ -177,7 +177,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/cursos/1"
+            "url": "{{baseUrl}}/curso/1"
           }
         },
         {
@@ -212,7 +212,7 @@
               "mode": "raw",
               "raw": "{\n  \"nome\": \"Ciência da Computação\",\n  \"descricao\": \"Curso de Bacharelado em Tecnologia\"\n}"
             },
-            "url": "{{baseUrl}}/cursos"
+            "url": "{{baseUrl}}/curso"
           }
         },
         {
@@ -247,7 +247,7 @@
               "mode": "raw",
               "raw": "{\n  \"id\": 1,\n  \"nome\": \"Ciência da Computação Editado\",\n  \"descricao\": \"Descrição editada\"\n}"
             },
-            "url": "{{baseUrl}}/cursos"
+            "url": "{{baseUrl}}/curso"
           }
         },
         {
@@ -272,7 +272,7 @@
           ],
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/cursos/1"
+            "url": "{{baseUrl}}/curso/1"
           }
         }
       ]
@@ -303,7 +303,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/turmas"
+            "url": "{{baseUrl}}/turma"
           }
         },
         {
@@ -329,7 +329,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/turmas/1"
+            "url": "{{baseUrl}}/turma/1"
           }
         },
         {
@@ -364,7 +364,7 @@
               "mode": "raw",
               "raw": "{\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1\",\n  \"descricao\": \"Turma do primeiro semestre\"\n}"
             },
-            "url": "{{baseUrl}}/turmas"
+            "url": "{{baseUrl}}/turma"
           }
         },
         {
@@ -399,7 +399,7 @@
               "mode": "raw",
               "raw": "{\n  \"id\": 1,\n  \"cursoId\": 1,\n  \"nome\": \"Turma 2024.1 Atualizada\",\n  \"descricao\": \"Descrição editada\"\n}"
             },
-            "url": "{{baseUrl}}/turmas"
+            "url": "{{baseUrl}}/turma"
           }
         },
         {
@@ -424,7 +424,7 @@
           ],
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/turmas/1"
+            "url": "{{baseUrl}}/turma/1"
           }
         }
       ]
@@ -455,7 +455,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/matriculas"
+            "url": "{{baseUrl}}/matricula"
           }
         },
         {
@@ -480,7 +480,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/matriculas/1"
+            "url": "{{baseUrl}}/matricula/1"
           }
         },
         {
@@ -515,7 +515,7 @@
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2024-12-31T23:59:59.000Z\"\n}"
             },
-            "url": "{{baseUrl}}/matriculas"
+            "url": "{{baseUrl}}/matricula"
           }
         },
         {
@@ -550,7 +550,7 @@
               "mode": "raw",
               "raw": "{\n  \"id\": 1,\n  \"turmaId\": 1,\n  \"dataExpiracao\": \"2025-12-31T23:59:59.000Z\"\n}"
             },
-            "url": "{{baseUrl}}/matriculas"
+            "url": "{{baseUrl}}/matricula"
           }
         },
         {
@@ -575,7 +575,7 @@
           ],
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/matriculas/1"
+            "url": "{{baseUrl}}/matricula/1"
           }
         }
       ]
@@ -606,7 +606,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/notas"
+            "url": "{{baseUrl}}/nota"
           }
         },
         {
@@ -631,7 +631,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/notas/1"
+            "url": "{{baseUrl}}/nota/1"
           }
         },
         {
@@ -666,7 +666,7 @@
               "mode": "raw",
               "raw": "{\n  \"matriculaId\": 1,\n  \"valorNota\": 85\n}"
             },
-            "url": "{{baseUrl}}/notas"
+            "url": "{{baseUrl}}/nota"
           }
         },
         {
@@ -701,7 +701,7 @@
               "mode": "raw",
               "raw": "{\n  \"id\": 1,\n  \"matriculaId\": 1,\n  \"valorNota\": 95\n}"
             },
-            "url": "{{baseUrl}}/notas"
+            "url": "{{baseUrl}}/nota"
           }
         },
         {
@@ -726,7 +726,7 @@
           ],
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/notas/1"
+            "url": "{{baseUrl}}/nota/1"
           }
         }
       ]
