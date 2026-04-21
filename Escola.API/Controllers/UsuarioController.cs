@@ -26,7 +26,7 @@ public class UsuarioController : ControllerBase
             return BadRequest(new { Message = "Já existe um usuário com esse email." });
 
         var usuario = await _usuarioService.AddAsync(usuarioPostDTO);
-        var token = _authenticate.GenerateToken(usuario.Id, usuario.Email.ToLower(), usuario.Perfil.ToLower());
+        var token = _authenticate.GenerateToken(usuario.Id, usuario.Email.ToLower(), usuario.Perfil);
 
         return Ok(new { Nome = usuario.Nome, Token = token });
     }
@@ -42,7 +42,7 @@ public class UsuarioController : ControllerBase
         if (!usuarioValido)
             return BadRequest(new { Message = "Usuário ou senha inválidos." });
 
-        var token = _authenticate.GenerateToken(usuario.Id, usuario.Email.ToLower(), usuario.Perfil.ToLower());
+        var token = _authenticate.GenerateToken(usuario.Id, usuario.Email.ToLower(), usuario.Perfil);
 
         return Ok(new { Nome = usuario.Nome, Token = token });
     }

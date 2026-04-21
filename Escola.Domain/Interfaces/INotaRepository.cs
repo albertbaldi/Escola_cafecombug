@@ -9,4 +9,5 @@ public interface INotaRepository
     Task<Nota> AddAsync(Nota nota);
     Task<Nota> UpdateAsync(Nota nota);
     Task<Nota> DeleteAsync(int id);
+    Task<List<Nota>> GetNotasByTurmaUsuarioAsync(int idTurma, int idUsuario);
 }
