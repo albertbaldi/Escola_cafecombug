@@ -8,11 +8,16 @@ public static class ClaimsPrincipalExtension
     public static int GetUserId(this ClaimsPrincipal user)
     {
         var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-        if (userIdClaim == null)
+        if (string.IsNullOrWhiteSpace(userIdClaim?.Value))
         {
-            throw new Exception("User ID claim not found.");
+            throw new UnauthorizedAccessException("Claim de identificação do usuário não encontrado.");
         }
 
-        return int.Parse(userIdClaim.Value);
+        if (!int.TryParse(userIdClaim.Value, out var userId))
+        {
+            throw new UnauthorizedAccessException("Claim de identificação do usuário inválido.");
+        }
+
+        return userId;
     }
 }
