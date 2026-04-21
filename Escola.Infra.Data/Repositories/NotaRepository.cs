@@ -46,7 +46,7 @@ public class NotaRepository : INotaRepository
         return await _context.Nota.Where(n => !n.Excluido && n.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<List<Nota>> GetNotasByTurmaUsuario(int idTurma, int idUsuario)
+    public async Task<List<Nota>> GetNotasByTurmaUsuarioAsync(int idTurma, int idUsuario)
     {
         return await _context.Nota
             .Where(n => !n.Excluido && n.Matricula.TurmaId == idTurma && n.Matricula.UsuarioId == idUsuario)
