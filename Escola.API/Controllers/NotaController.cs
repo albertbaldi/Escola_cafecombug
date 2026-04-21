@@ -62,12 +62,12 @@ public class NotaController : ControllerBase
         return Ok(notas);
     }
 
-    [HttpGet("usuario/turma/{id}")]
+    [HttpGet("usuario/turma/{idTurma}")]
     [Authorize(Roles = "Aluno, Administrador")]
-    public async Task<ActionResult> GetNotasByTurmaUsuario(int id)
+    public async Task<ActionResult> GetNotasByTurmaUsuario(int idTurma)
     {
         var idUsuario = User.GetUserId();
-        var notas = await _notaService.GetNotasByTurmaUsuario(id, idUsuario);
+        var notas = await _notaService.GetNotasByTurmaUsuario(idTurma, idUsuario);
 
         return Ok(notas);
     }
