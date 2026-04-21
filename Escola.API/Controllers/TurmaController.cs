@@ -1,11 +1,13 @@
 using Escola.Application.DTOs.Turma;
 using Escola.Application.Interfaces;
+using Escola.Infra.Ioc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Escola.API.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class TurmaController : ControllerBase
 {
     private readonly ITurmaService _turmaService;
@@ -15,6 +17,7 @@ public class TurmaController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> CreateTurma(TurmaPostDTO turmaPostDTO)
     {
         await _turmaService.AddAsync(turmaPostDTO);
@@ -24,6 +27,7 @@ public class TurmaController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> UpdateTurma(TurmaPutDTO turmaPutDTO)
     {
         await _turmaService.UpdateAsync(turmaPutDTO);
@@ -33,6 +37,7 @@ public class TurmaController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> DeleteTurma(int id)
     {
         await _turmaService.DeleteAsync(id);
@@ -41,6 +46,7 @@ public class TurmaController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> GetTurmaById(int id)
     {
         var turma = await _turmaService.GetByIdAsync(id);
@@ -48,10 +54,23 @@ public class TurmaController : ControllerBase
         return Ok(turma);
     }
 
+
     [HttpGet]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> GetAllTurmas()
     {
         var turmas = await _turmaService.GetAllAsync();
+
+        return Ok(turmas);
+    }
+
+    [HttpGet("usuario")]
+    [Authorize(Roles = "Aluno, Administrador")]
+    public async Task<ActionResult> GetTurmasByIdUsuario()
+    {
+        var userId = User.GetUserId();
+
+        var turmas = await _turmaService.GetTurmasByUsuario(userId);
 
         return Ok(turmas);
     }

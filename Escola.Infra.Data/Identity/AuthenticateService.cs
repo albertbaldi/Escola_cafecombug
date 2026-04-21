@@ -52,7 +52,7 @@ public class AuthenticateService : IAuthenticate
         {
             new Claim(ClaimTypes.NameIdentifier, id.ToString()),
             new Claim(ClaimTypes.Email, email.ToLower()),
-            new Claim(ClaimTypes.Role, role.ToLower()),
+            new Claim(ClaimTypes.Role, role),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 

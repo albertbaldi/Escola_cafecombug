@@ -1,11 +1,13 @@
 using Escola.Application.DTOs.Nota;
 using Escola.Application.Interfaces;
+using Escola.Infra.Ioc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Escola.API.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class NotaController : ControllerBase
 {
     private readonly INotaService _notaService;
@@ -16,6 +18,7 @@ public class NotaController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> CreateNota(NotaPostDTO notaPostDTO)
     {
         await _notaService.AddAsync(notaPostDTO);
@@ -24,6 +27,7 @@ public class NotaController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> UpdateNota(NotaPutDTO notaPutDTO)
     {
         await _notaService.UpdateAsync(notaPutDTO);
@@ -32,6 +36,7 @@ public class NotaController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> DeleteNota(int id)
     {
         await _notaService.DeleteAsync(id);
@@ -40,6 +45,7 @@ public class NotaController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> GetNotaById(int id)
     {
         var nota = await _notaService.GetByIdAsync(id);
@@ -48,9 +54,20 @@ public class NotaController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult> GetAllNotas()
     {
         var notas = await _notaService.GetAllAsync();
+
+        return Ok(notas);
+    }
+
+    [HttpGet("usuario/turma/{id}")]
+    [Authorize(Roles = "Aluno, Administrador")]
+    public async Task<ActionResult> GetNotasByTurmaUsuario(int id)
+    {
+        var idUsuario = User.GetUserId();
+        var notas = await _notaService.GetNotasByTurmaUsuario(id, idUsuario);
 
         return Ok(notas);
     }

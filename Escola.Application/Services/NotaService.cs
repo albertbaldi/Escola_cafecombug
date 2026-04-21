@@ -93,6 +93,20 @@ public class NotaService : INotaService
         };
     }
 
+    public async Task<List<NotaGetDTO>> GetNotasByTurmaUsuario(int idTurma, int idUsuario)
+    {
+        var notas = await _notaRepository.GetNotasByTurmaUsuario(idTurma, idUsuario);
+
+        return notas.Select(n => new NotaGetDTO
+        {
+            Id = n.Id,
+            MatriculaId = n.MatriculaId,
+            ValorNota = n.ValorNota,
+            DataNota = n.DataNota,
+            Aprovado = n.Aprovado
+        }).ToList();
+    }
+
     public async Task<NotaGetDTO> UpdateAsync(NotaPutDTO notaPutDTO)
     {
         var nota = await _notaRepository.GetByIdAsync(notaPutDTO.Id);

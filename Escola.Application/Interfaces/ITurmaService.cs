@@ -10,4 +10,5 @@ public interface ITurmaService
     Task<TurmaGetDTO> AddAsync(TurmaPostDTO turmaPostDTO);
     Task<TurmaGetDTO> UpdateAsync(TurmaPutDTO turmaPutDTO);
     Task<TurmaGetDTO> DeleteAsync(int id);
+    Task<List<TurmaGetDetailDTO>> GetTurmasByUsuario(int idUsuario);
 }
