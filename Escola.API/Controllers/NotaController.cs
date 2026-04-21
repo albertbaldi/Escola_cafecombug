@@ -67,7 +67,7 @@ public class NotaController : ControllerBase
     public async Task<ActionResult> GetNotasByTurmaUsuario(int idTurma)
     {
         var idUsuario = User.GetUserId();
-        var notas = await _notaService.GetNotasByTurmaUsuario(idTurma, idUsuario);
+        var notas = await _notaService.GetNotasByTurmaUsuarioAsync(idTurma, idUsuario);
 
         return Ok(notas);
     }
