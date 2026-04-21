@@ -105,7 +105,7 @@ public class TurmaService : ITurmaService
         if (usuario == null)
             throw new NotFoundException("Usuário não encontrado.");
 
-        var turmas = await _turmaRepository.GetTurmasByUsuario(idUsuario);
+        var turmas = await _turmaRepository.GetTurmasByUsuarioAsync(idUsuario);
         return turmas.Select(t => new TurmaGetDetailDTO
         {
             Id = t.Id,

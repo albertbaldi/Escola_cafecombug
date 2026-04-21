@@ -47,7 +47,7 @@ public class TurmaRepository : ITurmaRepository
         return await _context.Turma.Include(t => t.Curso).Where(t => !t.Excluido && t.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<List<Turma>> GetTurmasByUsuario(int idUsuario)
+    public async Task<List<Turma>> GetTurmasByUsuarioAsync(int idUsuario)
     {
         return await _context.Turma.Include(t => t.Curso)
                                    .Where(t => !t.Excluido && t.Matriculas.Any(m => m.UsuarioId == idUsuario))
