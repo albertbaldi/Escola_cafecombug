@@ -93,7 +93,7 @@ public class NotaService : INotaService
         };
     }
 
-    public async Task<List<NotaGetDTO>> GetNotasByTurmaUsuario(int idTurma, int idUsuario)
+    public async Task<List<NotaGetDTO>> GetNotasByTurmaUsuarioAsync(int idTurma, int idUsuario)
     {
         var notas = await _notaRepository.GetNotasByTurmaUsuario(idTurma, idUsuario);
 
