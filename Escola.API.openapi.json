@@ -1,0 +1,1315 @@
+{
+    "openapi": "3.1.0",
+    "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+    "info": {
+        "title": "Escola_cafecombug API",
+        "version": "1.0.0",
+        "description": "Especificacao canônica da Escola.API para importacao em Postman, Bruno e ferramentas compatíveis com OpenAPI."
+    },
+    "servers": [
+        {
+            "url": "https://localhost:5001/api"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Usuarios",
+            "description": "Gerenciamento de usuários e autenticação"
+        },
+        {
+            "name": "Cursos",
+            "description": "Gerenciamento de cursos"
+        },
+        {
+            "name": "Turmas",
+            "description": "Gerenciamento de turmas"
+        },
+        {
+            "name": "Matriculas",
+            "description": "Gerenciamento de matrículas"
+        },
+        {
+            "name": "Notas",
+            "description": "Gerenciamento de notas"
+        }
+    ],
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/usuario": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Registrar novo usuário",
+                "operationId": "createUsuario",
+                "security": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioPostDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "nome": "João Silva",
+                                        "email": "joao.silva@exemplo.com",
+                                        "senha": "senhaForte123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioAuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário já existe"
+                    }
+                }
+            }
+        },
+        "/usuario/login": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Autenticar usuário",
+                "operationId": "loginUsuario",
+                "security": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioLoginDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "email": "joao.silva@exemplo.com",
+                                        "senha": "senhaForte123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autenticação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioAuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário ou senha inválidos"
+                    }
+                }
+            }
+        },
+        "/curso": {
+            "get": {
+                "tags": [
+                    "Cursos"
+                ],
+                "summary": "Listar cursos",
+                "operationId": "getAllCursos",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de cursos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CursoGetDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cursos"
+                ],
+                "summary": "Criar curso",
+                "operationId": "createCurso",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CursoPostDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "nome": "Ciência da Computação",
+                                        "descricao": "Curso de Bacharelado em Tecnologia"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Curso criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cursos"
+                ],
+                "summary": "Atualizar curso",
+                "operationId": "updateCurso",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CursoPutDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "id": 1,
+                                        "nome": "Ciência da Computação Editado",
+                                        "descricao": "Descrição editada"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Curso atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/curso/{id}": {
+            "get": {
+                "tags": [
+                    "Cursos"
+                ],
+                "summary": "Obter curso por ID",
+                "operationId": "getCursoById",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Curso encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CursoGetDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cursos"
+                ],
+                "summary": "Excluir curso",
+                "operationId": "deleteCurso",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Curso deletado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/turma": {
+            "get": {
+                "tags": [
+                    "Turmas"
+                ],
+                "summary": "Listar turmas",
+                "operationId": "getAllTurmas",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de turmas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TurmaGetDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Turmas"
+                ],
+                "summary": "Criar turma",
+                "operationId": "createTurma",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TurmaPostDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "cursoId": 1,
+                                        "nome": "Turma 2024.1",
+                                        "descricao": "Turma do primeiro semestre"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Turma criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Turmas"
+                ],
+                "summary": "Atualizar turma",
+                "operationId": "updateTurma",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TurmaPutDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "id": 1,
+                                        "cursoId": 1,
+                                        "nome": "Turma 2024.1 Atualizada",
+                                        "descricao": "Descrição editada"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Turma atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/turma/{id}": {
+            "get": {
+                "tags": [
+                    "Turmas"
+                ],
+                "summary": "Obter turma por ID",
+                "operationId": "getTurmaById",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Turma encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TurmaGetDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Turmas"
+                ],
+                "summary": "Excluir turma",
+                "operationId": "deleteTurma",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Turma deletada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/turma/usuario": {
+            "get": {
+                "tags": [
+                    "Turmas"
+                ],
+                "summary": "Listar turmas do usuário autenticado",
+                "operationId": "getTurmasByCurrentUser",
+                "x-roles": [
+                    "Aluno",
+                    "Administrador"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de turmas do usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TurmaGetDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/matricula": {
+            "get": {
+                "tags": [
+                    "Matriculas"
+                ],
+                "summary": "Listar matrículas",
+                "operationId": "getAllMatriculas",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de matrículas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MatriculaGetDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Matriculas"
+                ],
+                "summary": "Criar matrícula",
+                "operationId": "createMatricula",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MatriculaPostDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "usuarioId": 1,
+                                        "turmaId": 1,
+                                        "dataExpiracao": "2024-12-31T23:59:59.000Z"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Matrícula criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Matriculas"
+                ],
+                "summary": "Atualizar matrícula",
+                "operationId": "updateMatricula",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MatriculaPutDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "id": 1,
+                                        "turmaId": 1,
+                                        "dataExpiracao": "2025-12-31T23:59:59.000Z"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Matrícula atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/matricula/{id}": {
+            "get": {
+                "tags": [
+                    "Matriculas"
+                ],
+                "summary": "Obter matrícula por ID",
+                "operationId": "getMatriculaById",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Matrícula encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MatriculaGetDetailDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Matriculas"
+                ],
+                "summary": "Excluir matrícula",
+                "operationId": "deleteMatricula",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Matrícula deletada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nota": {
+            "get": {
+                "tags": [
+                    "Notas"
+                ],
+                "summary": "Listar notas",
+                "operationId": "getAllNotas",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de notas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NotaGetDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Notas"
+                ],
+                "summary": "Criar nota",
+                "operationId": "createNota",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NotaPostDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "matriculaId": 1,
+                                        "valorNota": 85
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nota criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Notas"
+                ],
+                "summary": "Atualizar nota",
+                "operationId": "updateNota",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NotaPutDTO"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "id": 1,
+                                        "matriculaId": 1,
+                                        "valorNota": 95
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nota atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nota/{id}": {
+            "get": {
+                "tags": [
+                    "Notas"
+                ],
+                "summary": "Obter nota por ID",
+                "operationId": "getNotaById",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nota encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotaGetDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notas"
+                ],
+                "summary": "Excluir nota",
+                "operationId": "deleteNota",
+                "x-roles": [
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nota deletada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nota/usuario/turma/{idTurma}": {
+            "get": {
+                "tags": [
+                    "Notas"
+                ],
+                "summary": "Listar notas do usuário autenticado por turma",
+                "operationId": "getNotasByCurrentUserAndTurma",
+                "x-roles": [
+                    "Aluno",
+                    "Administrador"
+                ],
+                "parameters": [
+                    {
+                        "name": "idTurma",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de notas da turma do usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NotaGetDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "JWT Authorization header using the Bearer scheme."
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "schemas": {
+            "MessageResponse": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "Message": {
+                        "type": "string",
+                        "examples": [
+                            "Curso criado com sucesso!"
+                        ]
+                    }
+                },
+                "required": [
+                    "Message"
+                ]
+            },
+            "UsuarioAuthResponse": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "Nome": {
+                        "type": "string",
+                        "examples": [
+                            "João Silva"
+                        ]
+                    },
+                    "Token": {
+                        "type": "string",
+                        "description": "JWT de autenticação"
+                    }
+                },
+                "required": [
+                    "Nome",
+                    "Token"
+                ]
+            },
+            "CursoPostDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "nome": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "descricao": {
+                        "type": "string",
+                        "maxLength": 150
+                    }
+                },
+                "required": [
+                    "nome",
+                    "descricao"
+                ]
+            },
+            "CursoPutDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nome": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "descricao": {
+                        "type": "string",
+                        "maxLength": 150
+                    }
+                },
+                "required": [
+                    "id",
+                    "nome",
+                    "descricao"
+                ]
+            },
+            "CursoGetDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "nome",
+                    "descricao"
+                ]
+            },
+            "TurmaPostDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "cursoId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nome": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "descricao": {
+                        "type": "string",
+                        "maxLength": 150
+                    }
+                },
+                "required": [
+                    "cursoId",
+                    "nome",
+                    "descricao"
+                ]
+            },
+            "TurmaPutDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "cursoId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nome": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "descricao": {
+                        "type": "string",
+                        "maxLength": 150
+                    }
+                },
+                "required": [
+                    "id",
+                    "cursoId",
+                    "nome",
+                    "descricao"
+                ]
+            },
+            "TurmaGetDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "cursoId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "cursoId",
+                    "nome",
+                    "descricao"
+                ]
+            },
+            "UsuarioPostDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "nome": {
+                        "type": "string",
+                        "maxLength": 250
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "maxLength": 200
+                    },
+                    "senha": {
+                        "type": "string",
+                        "minLength": 8,
+                        "maxLength": 250
+                    }
+                },
+                "required": [
+                    "nome",
+                    "email",
+                    "senha"
+                ]
+            },
+            "UsuarioLoginDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "maxLength": 200
+                    },
+                    "senha": {
+                        "type": "string",
+                        "minLength": 8,
+                        "maxLength": 250
+                    }
+                },
+                "required": [
+                    "email",
+                    "senha"
+                ]
+            },
+            "UsuarioGetDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "perfil": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "nome",
+                    "email",
+                    "perfil"
+                ]
+            },
+            "MatriculaPostDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "usuarioId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "turmaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "usuarioId",
+                    "turmaId",
+                    "dataExpiracao"
+                ]
+            },
+            "MatriculaPutDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "turmaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "id",
+                    "turmaId",
+                    "dataExpiracao"
+                ]
+            },
+            "MatriculaGetDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "usuarioId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "turmaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dataMatricula": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "ativa": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "id",
+                    "usuarioId",
+                    "turmaId",
+                    "dataMatricula",
+                    "dataExpiracao",
+                    "ativa"
+                ]
+            },
+            "MatriculaGetDetailDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "dataMatricula": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "ativa": {
+                        "type": "boolean"
+                    },
+                    "turma": {
+                        "$ref": "#/components/schemas/TurmaGetDTO"
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/UsuarioGetDTO"
+                    }
+                },
+                "required": [
+                    "id",
+                    "dataMatricula",
+                    "dataExpiracao",
+                    "ativa",
+                    "turma",
+                    "usuario"
+                ]
+            },
+            "NotaPostDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "matriculaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "valorNota": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                },
+                "required": [
+                    "matriculaId",
+                    "valorNota"
+                ]
+            },
+            "NotaPutDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "matriculaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "valorNota": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                },
+                "required": [
+                    "id",
+                    "matriculaId",
+                    "valorNota"
+                ]
+            },
+            "NotaGetDTO": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "matriculaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "valorNota": {
+                        "type": "integer"
+                    },
+                    "aprovado": {
+                        "type": "boolean"
+                    },
+                    "dataNota": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "id",
+                    "matriculaId",
+                    "valorNota",
+                    "aprovado",
+                    "dataNota"
+                ]
+            }
+        }
+    }
+}
